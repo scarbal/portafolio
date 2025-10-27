@@ -2,7 +2,7 @@ import NavBar from "./components/navBar";
 import ProjectCard from "./components/ProjectCard";
 import SkillsCard from "./components/skillsCard";
 import { useRef, useState, useEffect } from "react";
-import { Download, Mail, Check } from "lucide-react";
+import { Download, Mail, Check, Phone } from "lucide-react";
 
 export default function App() {
   const workSection = useRef<HTMLElement | null>(null);
@@ -35,18 +35,20 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [copied, setCopied] = useState(false);
-  const email = "santiagocarbalm@gmail.com";
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [copiedPhone, setCopiedPhone] = useState(false);
 
-  const copyToClipboard = async () => {
+  const copyToClipboard = async (text: string, setState: (v: boolean) => void) => {
     try {
-      await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000); // 
+      await navigator.clipboard.writeText(text);
+      setState(true);
+      setTimeout(() => setState(false), 2000);
+      console.log("Copiado:", text);
     } catch (err) {
-      console.error("Error al copiar el correo:", err);
+      console.error("Error al copiar:", err);
     }
   };
+
 
   return (
     <div
@@ -92,15 +94,30 @@ export default function App() {
             <img src="/assets/github-mark-white.svg" alt="GitHub" className="w-6 h-6" />
           </a>
           <button
-            onClick={copyToClipboard}
+            onClick={() => copyToClipboard("santiago-carbal@hotmail.com", setCopiedEmail)}
             className="relative text-gray-400 hover:text-white transition-colors"
           >
-            {copied ? (
+            {copiedEmail ? (
               <Check size={22} className="text-green-400" />
             ) : (
               <Mail size={22} />
             )}
-            {copied && (
+            {copiedEmail && (
+              <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
+                Copied!
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => copyToClipboard("+57 3024561901", setCopiedPhone)}
+            className="relative text-gray-400 hover:text-white transition-colors"
+          >
+            {copiedPhone ? (
+              <Check size={22} className="text-green-400" />
+            ) : (
+              <Phone size={22} />
+            )}
+            {copiedPhone && (
               <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
                 Copied!
               </span>
@@ -175,9 +192,15 @@ export default function App() {
             <SkillsCard img="/assets/react.svg" title="React" alt="react-logo" />
             <SkillsCard img="/assets/tailwindcss-logotype-white.svg" title="Tailwind" alt="tailwind-logo" />
             <SkillsCard img="/assets/js-svgrepo-com.svg" title="JavaScript" alt="js-logo" />
-            <SkillsCard img="/assets/python-svgrepo-com.svg" title="Python" alt="python-logo" />
+            <SkillsCard img="/assets/unity-svgrepo-com.svg" title="Unity" alt="Unity-logo" />
             <SkillsCard img="/assets/firebase-svgrepo-com.svg" title="Firebase" alt="firebase-logo" />
             <SkillsCard img="/assets/typescript-official-svgrepo-com.svg" title="TypeScript" alt="typescript-logo" />
+            
+            <SkillsCard img="/assets/flutter-svgrepo-com.svg" title="Flutter" alt="Flutter" />
+            <SkillsCard img="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" title="Node Js" alt="Node-logo" />
+            <SkillsCard img="https://upload.wikimedia.org/wikipedia/commons/0/0a/MySQL_textlogo.svg" title="MySQL" alt="MySQL-logo" />
+            <SkillsCard img="/assets/ubuntu-svgrepo-com.svg" title="Linux Ubuntu" alt="Linux-logo" />
+
           </div>
         </div>
 
@@ -289,15 +312,30 @@ The design follows a dark theme with yellow highlights, providing a clean and mo
             </a>
 
             <button
-              onClick={copyToClipboard}
+              onClick={() => copyToClipboard("santiago-carbal@hotmail.com", setCopiedEmail)}
               className="relative text-gray-400 hover:text-white transition-colors"
             >
-              {copied ? (
+              {copiedEmail ? (
                 <Check size={22} className="text-green-400" />
               ) : (
                 <Mail size={22} />
               )}
-              {copied && (
+              {copiedEmail && (
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
+                  Copied!
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => copyToClipboard("+57 3024561901", setCopiedPhone)}
+              className="relative text-gray-400 hover:text-white transition-colors"
+            >
+              {copiedPhone ? (
+                <Check size={22} className="text-green-400" />
+              ) : (
+                <Phone size={22} />
+              )}
+              {copiedPhone && (
                 <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
                   Copied!
                 </span>
