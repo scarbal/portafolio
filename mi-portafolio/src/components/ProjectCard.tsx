@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+
 interface ProjectCardProps {
   img: string;
   title: string;
@@ -18,24 +19,28 @@ export default function ProjectCard({
   link,
   Github,
   bgcolor,
-  techs
+  techs,
 }: ProjectCardProps) {
   return (
-    <div className="flex rounded-lg space-x-7 bg-[#1c2127] w-full aspect-[2/1] overflow-hidden shadow-lg shadow-gray-300">
-      <img
-        src={img}
-        alt={alt}
-        style={{ backgroundColor: bgcolor || "white" }}
-        className="aspect-[7/8] object-contain"
-      />
-      <div className="flex flex-col justify-between p-10">
-        <div className="flex flex-col space-y-5 py-5">
-          <h2 className="text-white text-xl font-bold">{title}</h2>
-          <p className="text-gray-300 text-lg">{description}</p>
+    <div className="flex flex-col md:flex-row rounded-2xl bg-[#1c2127] w-full min-h-[320px] overflow-hidden shadow-lg shadow-gray-800 transition-transform hover:scale-[1.01]">
+      {/* Imagen del proyecto */}
+      <div className="flex justify-center items-center md:w-1/2 w-full bg-white" style={{ backgroundColor: bgcolor || "white" }}>
+        <img
+          src={img}
+          alt={alt}
+          className="object-contain w-3/4 h-3/4 md:w-[80%] md:h-auto"
+        />
+      </div>
 
-          {/* 👇 lista de tecnologías */}
+      {/* Contenido */}
+      <div className="flex flex-col justify-between p-8 md:w-1/2 w-full space-y-4">
+        <div className="space-y-4">
+          <h2 className="text-white text-2xl font-bold">{title}</h2>
+          <p className="text-gray-300 text-base leading-relaxed">{description}</p>
+
+          {/* Lista de tecnologías */}
           {techs && techs.length > 0 && (
-            <ul className="flex flex-wrap gap-3 mt-3">
+            <ul className="flex flex-wrap gap-2 mt-2">
               {techs.map((tec) => (
                 <li
                   key={tec}
@@ -48,11 +53,12 @@ export default function ProjectCard({
           )}
         </div>
 
-        <div className="flex space-x-15">
+        {/* Botones */}
+        <div className="flex flex-wrap gap-4 mt-4">
           {link && (
             <button
               onClick={() => window.open(link, "_blank")}
-              className="bg-blue-500 hover:bg-blue-600 rounded-lg px-6 py-2"
+              className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg px-6 py-2 transition-all"
             >
               Live Demo
             </button>
@@ -61,9 +67,10 @@ export default function ProjectCard({
             <a
               href={Github}
               target="_blank"
-              className="flex items-center gap-2 text-gray-300 text-lg hover:text-white"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-gray-300 text-lg hover:text-white transition-all"
             >
-              GitHub <ExternalLink size={20} strokeWidth={2} className="text-gray-300" />
+              GitHub <ExternalLink size={20} strokeWidth={2} />
             </a>
           )}
         </div>
