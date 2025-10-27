@@ -2,7 +2,7 @@ import NavBar from "./components/navBar";
 import ProjectCard from "./components/ProjectCard";
 import SkillsCard from "./components/skillsCard";
 import { useRef, useState, useEffect } from "react";
-import { Download } from "lucide-react";
+import { Download, Mail, Check } from "lucide-react";
 
 export default function App() {
   const workSection = useRef<HTMLElement | null>(null);
@@ -35,6 +35,19 @@ export default function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const [copied, setCopied] = useState(false);
+  const email = "santiagocarbalm@gmail.com";
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000); // 
+    } catch (err) {
+      console.error("Error al copiar el correo:", err);
+    }
+  };
+
   return (
     <div
       className="min-h-screen transition-colors duration-1000 ease-in-out text-white"
@@ -62,16 +75,38 @@ export default function App() {
         </button>
 
         <div className="flex justify-center space-x-6">
-          <img
-            src="./assets/linkedin-logo.svg"
-            alt="linkedin"
-            className="w-7 h-7 md:w-8 md:h-8"
-          />
-          <img
-            src="./assets/github-mark-white.svg"
-            alt="github"
-            className="w-7 h-7 md:w-8 md:h-8"
-          />
+          <a
+            href="https://www.linkedin.com/in/santiago-carbal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-white transition-colors"
+          >
+            <img src="/assets/linkedin-logo.svg" alt="LinkedIn" className="w-6 h-6" />
+          </a>
+          <a
+            href="https://github.com/scarbal"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 hover:text-white transition-colors"
+          >
+            <img src="/assets/github-mark-white.svg" alt="GitHub" className="w-6 h-6" />
+          </a>
+          <button
+            onClick={copyToClipboard}
+            className="relative text-gray-400 hover:text-white transition-colors"
+          >
+            {copied ? (
+              <Check size={22} className="text-green-400" />
+            ) : (
+              <Mail size={22} />
+            )}
+            {copied && (
+              <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
+                Copied!
+              </span>
+            )}
+          </button>
+
         </div>
 
         <p className="text-gray-400 text-sm md:text-base">
@@ -105,15 +140,15 @@ export default function App() {
             </div>
           </div>
 
-          <button 
+          <button
             onClick={() => {
-            const link = document.createElement("a");
-            link.href = "/SANTIAGO_JOSE_CARBAL_MARTINEZ_CV(ING).pdf";
-            link.download = "SantiagoCarbalCV.pdf";
-            link.click();
-          }}
-          className="flex flex-row gap-2 bg-green-400 text-white text-base px-5 font-bold py-2 rounded-lg hover:bg-green-500">
-           <Download size={18}/> Download My Resume 
+              const link = document.createElement("a");
+              link.href = "/SANTIAGO_JOSE_CARBAL_MARTINEZ_CV(ING).pdf";
+              link.download = "SantiagoCarbalCV.pdf";
+              link.click();
+            }}
+            className="flex flex-row gap-2 bg-green-400 text-white text-base px-5 font-bold py-2 rounded-lg hover:bg-green-500">
+            <Download size={18} /> Download My Resume
           </button>
         </div>
 
@@ -189,7 +224,7 @@ export default function App() {
             description="Development of an interactive virtual environment of the university campus using 3D modeling in Blender and programming in Unity, allowing users to freely explore digital representations of campus buildings, classrooms, and outdoor areas. The project integrates realistic textures, lighting, and animations to enhance immersion, while Unity’s scripting tools enable interactive features such as navigation controls, information panels, and guided tours. This virtual environment serves as an educational and promotional tool, providing students, visitors, and staff with an engaging and accessible way to experience the university campus virtually."
             link=""
             Github="https://github.com/openlabun/UNT-VR"
-            techs={["Unity","XrToolkit","Blender","MetaQuest 2", "Oculus"]}
+            techs={["Unity", "XrToolkit", "Blender", "MetaQuest 2", "Oculus"]}
           />
           <ProjectCard
             img="/assets/OpenLab.png"
@@ -207,7 +242,7 @@ export default function App() {
             description="Complete mobile ordering app development, using Flutter for business logic and FlutterFlow for interface design, integrating a smooth and efficient user experience for both customers and delivery personnel. The application includes key functionalities such as user authentication, order creation and tracking, real-time status updates, and delivery management. Firebase was used for backend services, including authentication, cloud storage, and database synchronization. This project demonstrates the integration of low-code design tools with custom Flutter logic to deliver a scalable, cross-platform mobile solution."
             link="https://domicilios-uninorte-rvh65d.flutterflow.app/clientPageOriginal"
             Github=""
-            techs={["Flutter", "Fluterrflow","Firebase", "Android Studio"]}
+            techs={["Flutter", "Fluterrflow", "Firebase", "Android Studio"]}
           />
           <ProjectCard
             img="/assets/registroCreditos.png"
@@ -220,11 +255,58 @@ The design follows a dark theme with yellow highlights, providing a clean and mo
             link="https://creditos-fy-a.vercel.app/"
             Github="https://github.com/scarbal/CreditosFyA.git"
             bgcolor="#101828"
-            techs={["React+vite","Express", "NodeJs", "MySQL", "TailWind"]}
+            techs={["React+vite", "Express", "NodeJs", "MySQL", "TailWind"]}
 
           />
         </div>
       </section>
+
+      {/* Footer */}
+      <footer id="contact" className="w-full border-t border-gray-700 mt-20 py-10 bg-[#0f172a]">
+        <div className="flex flex-col md:flex-row justify-between items-center px-10 md:px-40 space-y-5 md:space-y-0">
+
+          <p className="text-gray-400 text-sm md:text-base">
+            © {new Date().getFullYear()} <span className="text-white font-semibold">Santiago Carbal</span>. All rights reserved.
+          </p>
+
+          <div className="flex space-x-6 items-center">
+            <a
+              href="https://github.com/scarbal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <img src="/assets/github-mark-white.svg" alt="GitHub" className="w-6 h-6" />
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/santiago-carbal"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <img src="/assets/linkedin-logo.svg" alt="LinkedIn" className="w-6 h-6" />
+            </a>
+
+            <button
+              onClick={copyToClipboard}
+              className="relative text-gray-400 hover:text-white transition-colors"
+            >
+              {copied ? (
+                <Check size={22} className="text-green-400" />
+              ) : (
+                <Mail size={22} />
+              )}
+              {copied && (
+                <span className="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-green-400">
+                  Copied!
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+      </footer>
+
     </div>
   );
 }
